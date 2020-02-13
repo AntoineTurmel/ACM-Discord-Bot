@@ -80,7 +80,7 @@ async function play(message, time) {
    message.reply("Playing " + song.title + "\n" + song.url);
 
    //join voice channel
-   let channel = message.member.voiceChannel;
+   let channel = message.channel
    var connection = await channel.join();
 };
 client.login(token);
