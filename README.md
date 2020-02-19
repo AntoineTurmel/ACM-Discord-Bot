@@ -2,7 +2,7 @@
 A Discord Bot that plays the animal crossing soundtrack corresponding to the users time and weather
 
 Commands                                                                                                                                    
-;;play (starts playing song corresponding to users time and weather on loop and updates on the hour)                                                     
+;;play (starts playing song corresponding to users time and weather on loop and updates on the hour)                                            
 ;;play *time* (plays song corresponding to input time in format 1-12 am/pm on loop)
 
 ;;play *weather* (starts playing song corresponding to time and input weather on loop updates on the hour)                                                                 
