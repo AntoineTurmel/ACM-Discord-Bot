@@ -46,23 +46,25 @@ client.on('message', async message => {
    
    // /play message
    if (message.content.startsWith(prefix + "play")) {
-       let time = message.createdAt + " ";
+      //gets time in the correct format
+      let time = message.createdAt + " ";
       time = Number(time.substring(time.indexOf(":") - 2, time.indexOf(":")));
       if (time >= 12 && time < 24) {
          time = time - 12 + "pm" + " animal crossing new leaf";
       } else {
          time = time + "am" + " animal crossing new leaf";
       }
-      play(message,time);
+      //gets the voice channel
+      const voiceChannel = message.member.voice.channel;
+      play(message,time,voiceChannel);
    }
    if (message.content.startsWith(prefix + "stop")) {
       //stop(message);
    } 
 });
 
-async function play(message, time) {
+async function play(message, time, voiceChannel) {
    //checks voice channel things
-   const voiceChannel = message.member.voiceChannel;
    if (!voiceChannel) {
       return message.channel.send('You need to be in a voice channel to play music!');
    }
@@ -80,7 +82,18 @@ async function play(message, time) {
    message.reply("Playing " + song.title + "\n" + song.url);
 
    //join voice channel
-   let channel = message.channel
-   var connection = await channel.join();
+   /*try {
+      var connection = await voiceChannel.join();
+   } catch (err) {
+      console.log(err);
+   }*/
+
+   //play the song
+   voiceChannel.join().then(connection => {
+      const stream = ytdl(song.url, { filter: 'audioonly' });
+      const dispatcher = connection.play(stream);
+
+      dispatcher.on('end', () => voiceChannel.leave());
+   });
 };
 client.login(token);

@@ -1,0 +1,31 @@
+{
+  "name": "acm",
+  "version": "1.0.0",
+  "description": "animal crossing music",
+  "main": "ACM.js",
+  "dependencies": {
+    "discord.js": "^12.0.2",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.0.1",
+    "node-opus": "^0.3.3",
+    "opusscript": "^0.0.7",
+    "ytdl-core": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodemon ACM.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btorndorff/ACM-Discord-Bot.git"
+  },
+  "keywords": [
+    "acm"
+  ],
+  "author": "Borff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/btorndorff/ACM-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/btorndorff/ACM-Discord-Bot#readme"
+}
