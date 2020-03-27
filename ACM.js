@@ -9,30 +9,30 @@ const ytdl = require('ytdl-core');
 
 //map of times and song url
 let ACM = new Map();
-ACM.set("12am animal crossing new leaf", "https://youtu.be/yMsEExr7rOg");
-ACM.set("1am animal crossing new leaf", "https://youtu.be/S0UUTc8R_tk");
-ACM.set("2am animal crossing new leaf", "https://youtu.be/6ctYQ2giDfw");
-ACM.set("3am animal crossing new leaf", "https://youtu.be/lfCcR1G_VkU");
-ACM.set("4am animal crossing new leaf", "https://youtu.be/yL2diojhue8");
-ACM.set("5am animal crossing new leaf", "https://youtu.be/ZZk2CyGgbR0");
-ACM.set("6am animal crossing new leaf", "https://youtu.be/j4JrrHgnCb8");
-ACM.set("7am animal crossing new leaf", "https://youtu.be/XTXN67hugbA");
-ACM.set("8am animal crossing new leaf", "https://youtu.be/B9mDv-Z1_rI");
-ACM.set("9am animal crossing new leaf", "https://youtu.be/_O2SmI_aYMQ");
-ACM.set("10am animal crossing new leaf", "https://youtu.be/OOVpaOpdGmM");
-ACM.set("11am animal crossing new leaf", "https://youtu.be/yi_gzkqae_s");
-ACM.set("12pm animal crossing new leaf", "https://youtu.be/fKFRr3vJWWU");
-ACM.set("1pm animal crossing new leaf", "https://youtu.be/PsEaskBg-TU");
-ACM.set("2pm animal crossing new leaf", "https://youtu.be/nJB0OvU_vkg");
-ACM.set("3pm animal crossing new leaf", "https://youtu.be/n1eTTQLGU88");
-ACM.set("4pm animal crossing new leaf", "https://youtu.be/0x5FxWCCBiw");
-ACM.set("5pm animal crossing new leaf", "https://youtu.be/pLtKoYCPHFI");
-ACM.set("6pm animal crossing new leaf", "https://youtu.be/PWoicGQV4JU");
-ACM.set("7pm animal crossing new leaf", "https://youtu.be/yfYDBZgqD3g");
-ACM.set("8pm animal crossing new leaf", "https://youtu.be/deuR4NKHl38");
-ACM.set("9pm animal crossing new leaf", "https://youtu.be/-MSF-zfgNuY");
-ACM.set("10pm animal crossing new leaf", "https://youtu.be/HRpOxztFoUI");
-ACM.set("11pm animal crossing new leaf", "https://youtu.be/VMetMEMsYx4");
+ACM.set("0am animal crossing new horizons", "https://youtu.be/OW36kFCHdQ4");
+ACM.set("1am animal crossing new horizons", "https://youtu.be/OW36kFCHdQ4");
+ACM.set("2am animal crossing new horizons", "https://youtu.be/I9j_PrSn38A");
+ACM.set("3am animal crossing new horizons", "https://youtu.be/GD-3FiOHTe0");
+ACM.set("4am animal crossing new horizons", "https://youtu.be/q4TndIe-648");
+ACM.set("5am animal crossing new horizons", "https://youtu.be/XH6IXiXU8Eo");
+ACM.set("6am animal crossing new horizons", "https://youtu.be/3DdlJCXm7Vw");
+ACM.set("7am animal crossing new horizons", "https://youtu.be/kXvpdzYzyiU");
+ACM.set("8am animal crossing new horizons", "https://youtu.be/e5h_KM1kXgw");
+ACM.set("9am animal crossing new horizons", "https://youtu.be/e1qKdkDeDoc");
+ACM.set("10am animal crossing new horizons", "https://youtu.be/B20O58ceYko");
+ACM.set("11am animal crossing new horizons", "https://youtu.be/roj0iqA1X7o");
+ACM.set("12pm animal crossing new horizons", "https://youtu.be/xs4FJOvLPC8");
+ACM.set("1pm animal crossing new horizons", "https://youtu.be/WGCPde7TbRk");
+ACM.set("2pm animal crossing new horizons", "https://youtu.be/HgETcBBLdTk");
+ACM.set("3pm animal crossing new horizons", "https://youtu.be/D2TFSxMn-mc");
+ACM.set("4pm animal crossing new horizons", "https://youtu.be/D2TFSxMn-mc");
+ACM.set("5pm animal crossing new horizons", "https://youtu.be/uLtJIPu-Cns");
+ACM.set("6pm animal crossing new horizons", "https://youtu.be/sDSOT1LaNhU");
+ACM.set("7pm animal crossing new horizons", "https://youtu.be/sDSOT1LaNhU");
+ACM.set("8pm animal crossing new horizons", "https://youtu.be/wm4A_6fu4uQ");
+ACM.set("9pm animal crossing new horizons", "https://youtu.be/TuMvh1R2Wkw");
+ACM.set("10pm animal crossing new horizons", "https://youtu.be/ohZOZ8casjw");
+ACM.set("11pm animal crossing new horizons", "https://youtu.be/z5Xb6FQMnss");
 
 //notify terminal of bot logging in
 client.on('ready', () => {
@@ -43,26 +43,28 @@ client.on('ready', () => {
 client.on('message', async message => {
    //messages to ignore
    if (!message.content.startsWith(prefix) || message.author.bot) return;
-   
    // /play message
    if (message.content.startsWith(prefix + "play")) {
-      //gets time in the correct format
-      let time = message.createdAt + " ";
-      time = Number(time.substring(time.indexOf(":") - 2, time.indexOf(":")));
-      if (time >= 12 && time < 24) {
-         time = time - 12 + "pm" + " animal crossing new leaf";
-      } else {
-         time = time + "am" + " animal crossing new leaf";
-      }
       //gets the voice channel
-      const voiceChannel = message.member.voice.channel;
-      play(message,time,voiceChannel);
+      let voiceChannel = message.member.voice.channel;
+      play(message, getTime(message), voiceChannel);
    }
    if (message.content.startsWith(prefix + "stop")) {
-      //stop(message);
+      message.member.voice.channel.leave();
    } 
 });
 
+function getTime(message) {
+   let time = message.createdAt + " ";
+   console.log(time);
+   time = Number(time.substring(time.indexOf(":") - 2, time.indexOf(":")));
+   if (time >= 12 && time < 24) {
+      time = time - 12 + "pm" + " animal crossing new horizons";
+   } else {
+      time = time + "am" + " animal crossing new horizons";
+   }
+   return time;
+}
 async function play(message, time, voiceChannel) {
    //checks voice channel things
    if (!voiceChannel) {
@@ -74,6 +76,7 @@ async function play(message, time, voiceChannel) {
    }
 
    //finds song
+   console.log(time);
    const songInfo = await ytdl.getInfo(ACM.get(time));
    const song = {
    title: songInfo.title,
@@ -82,7 +85,7 @@ async function play(message, time, voiceChannel) {
    message.reply("Playing " + song.title + "\n" + song.url);
 
    //join voice channel
-   /*try {
+  /* try {
       var connection = await voiceChannel.join();
    } catch (err) {
       console.log(err);
@@ -90,10 +93,13 @@ async function play(message, time, voiceChannel) {
 
    //play the song
    voiceChannel.join().then(connection => {
-      const stream = ytdl(song.url, { filter: 'audioonly' });
-      const dispatcher = connection.play(stream);
-
-      dispatcher.on('end', () => voiceChannel.leave());
+      const dispatcher = connection.play(ytdl(song.url));
+      dispatcher.on("finish", () => {
+         message.channel.send("done");
+         play(message,getTime(message.channel.lastMessage),voiceChannel);
+      });
    });
+   
 };
+
 client.login(token);
