@@ -43,21 +43,22 @@ client.on('ready', () => {
 client.on('message', async message => {
    //messages to ignore
    if (!message.content.startsWith(prefix) || message.author.bot) return;
-   // /play message
+   
+   // >play Command
    if (message.content.startsWith(prefix + "play")) {
-      //gets the voice channel
       let voiceChannel = message.member.voice.channel;
-      play(message, getTime(message), voiceChannel);
+      let d = new Date();
+      play(message, getTime(d.getHours()), voiceChannel);
    }
+
+   // >stop command
    if (message.content.startsWith(prefix + "stop")) {
       message.member.voice.channel.leave();
    } 
 });
 
-function getTime(message) {
-   let time = message.createdAt + " ";
-   console.log(time);
-   time = Number(time.substring(time.indexOf(":") - 2, time.indexOf(":")));
+//helper function convert current time to ACM key value
+function getTime(time) {
    if (time >= 12 && time < 24) {
       time = time - 12 + "pm" + " animal crossing new horizons";
    } else {
@@ -65,6 +66,8 @@ function getTime(message) {
    }
    return time;
 }
+
+//play function 
 async function play(message, time, voiceChannel) {
    //checks voice channel things
    if (!voiceChannel) {
@@ -82,21 +85,14 @@ async function play(message, time, voiceChannel) {
    title: songInfo.title,
 	url: songInfo.video_url,
    };
-   message.reply("Playing " + song.title + "\n" + song.url);
-
-   //join voice channel
-  /* try {
-      var connection = await voiceChannel.join();
-   } catch (err) {
-      console.log(err);
-   }*/
+   message.channel.send("Playing " + song.title + "\n" + song.url);
 
    //play the song
    voiceChannel.join().then(connection => {
       const dispatcher = connection.play(ytdl(song.url));
       dispatcher.on("finish", () => {
-         message.channel.send("done");
-         play(message,getTime(message.channel.lastMessage),voiceChannel);
+         let d = new Date();
+         play(message,getTime(d.getHours()),voiceChannel);
       });
    });
    
